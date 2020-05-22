@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.eli.vue.mapper.TaxMapper">
+
+    <resultMap id="BaseResultMap" type="cn.eli.vue.entity.Tax">
+        <id column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="taxBefore" property="taxBefore" jdbcType="VARCHAR"/>
+        <result column="sxyj" property="sxyj" jdbcType="VARCHAR"/>
+        <result column="noTax" property="noTax" jdbcType="VARCHAR"/>
+        <result column="zxkc" property="zxkc" jdbcType="VARCHAR"/>
+        <result column="qtkc" property="qtkc" jdbcType="VARCHAR"/>
+        <result column="taxAfter" property="taxAfter" jdbcType="VARCHAR"/>
+        <result column="tax" property="tax" jdbcType="VARCHAR"/>
+        <result column="user_name" property="user_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="column_List">
+        uid,username,taxBefore,sxyj,noTax,zxkc,qtkc,taxAfter,tax
+    </sql>
+
+    <select id="selectUsers" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_List"/>
+        FROM taxuser where user_name=#{user_name}
+    </select>
+
+    <update id="updateUserByName" parameterType="cn.eli.vue.entity.Tax">
+      update taxuser set uid=#{uid},sxyj=#{sxyj} , taxBefore=#{taxBefore} ,noTax=#{noTax},zxkc=#{zxkc},qtkc=#{qtkc},taxAfter=#{taxAfter},tax=#{tax} where username = #{username} AND user_name=#{user_name}
+    </update>
+
+    <insert id="addUser" parameterType="cn.eli.vue.entity.Tax">
+        INSERT INTO taxuser (uid,username,taxBefore,sxyj,noTax,zxkc,qtkc,taxAfter,tax,user_name) VALUES (#{uid},#{username},#{taxBefore},#{sxyj},#{noTax},#{zxkc},#{qtkc},#{taxAfter},#{tax},#{user_name});
+    </insert>
+
+    <select id="selectByName" resultType="Integer">
+        SELECT count(*) FROM taxuser WHERE username=#{username} AND user_name=#{user_name};
+    </select>
+    <delete id="deleteData" parameterType="cn.eli.vue.entity.Tax">
+        delete from taxuser where user_name=#{user_name}
+    </delete>
+
+
+
+</mapper>
